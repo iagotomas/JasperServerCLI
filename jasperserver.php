@@ -5,7 +5,7 @@ date_default_timezone_set("Europe/Berlin");
 $config = array(
 "user"=>"jasperadmin",
 "password"=>"jasperadmin",
-"host"=>"http://localhost:8080/jasperserver/services/repository"
+"host"=>"http://localhost:9001/jasperserver/services/repository"
 );
 $options = getopt("m:p:c:l:d:h:t:");
 $host = !empty($options["h"])?$options["h"]:$config["host"];
@@ -60,7 +60,18 @@ function doDelete($parent,$folder){
 function doGet($uri,$name,$type){
 	global $client;
 	$result = $client->getResource($uri,$name,$type,getcwd());
-	print_r($result);
+
+	$xml = simplexml_load_string($result);
+	$returnCode = intval($xml->returnCode);
+	$l = $xml->resourceDescriptor->attributes();
+	$file = (string)$l["name"];
+	if($returnCode==0){
+	
+		echo "Downloaded file '$file'\n";
+	}
+	else{
+		echo "Couldn't download file\n";
+	}
 }
 $result = null;
 try{
