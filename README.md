@@ -9,7 +9,7 @@ To use you must configure **jasperserver.php $config** with your setup and use t
 
 
 List a uri from the repository:
-`jslist.sh <uri>`
+`jsls.sh <uri>`
 
 
 Retrieve a resource from the repository (full URI to resource)
